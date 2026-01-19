@@ -42,21 +42,22 @@
         /* --- PER I BOX --- */
         .box-articolo {
             /* Questa regola fa sì che bordo e padding siano inclusi nella larghezza totale */
-            box-sizing: border-box; 
-            
+            box-sizing: border-box;
+
             border: 2px solid #000000;
             border-radius: 15px;
             padding: 20px;
             margin: 20px auto;
-            
+
             /* Larghezza dinamica: occupa tutto lo spazio disponibile... */
             width: 100%;
             /* ...ma non superare mai i 400px (per il PC) */
             max-width: 400px;
-            
+
             background-color: #dfdbdb;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         /* ----------------------------------------- */
 
         .box-articolo:hover {
@@ -183,10 +184,11 @@
             }
 
             .button:hover {
-        transform: scale(1.05);       /* Ingrandisce */
-        background-color: #004499;    /* Cambia colore */
-        cursor: pointer;
-    }
+                transform: none !important;
+                /* Impedisce l'ingrandimento */
+                background-color: #0073e6 !important;
+                /* Mantiene il colore azzurro originale */
+            }
 
             .fixed-buttons {
                 bottom: 60px;
@@ -208,6 +210,11 @@
                 padding: 6px 12px;
                 margin: 0;
                 text-decoration: none;
+            }
+
+            nav a:hover {
+                transform: none !important;
+                background-color: rgba(255, 255, 255, 0.1) !important;
             }
 
             section {
@@ -263,7 +270,7 @@
     <section>
         <h2>BIBLIOGRAFIA DIGITALE</h2>
         <p class="testo-bio">Libreria digitale per appassionati del mare ed ingegneri navali e curiosi.</p>
-        <a href="Leggimi.pdf"
+        <a href="https://drive.google.com/drive/folders/1FVMUgNj9eDn8-FvDhvzF1rDFYUcB5P8N?usp=sharing"
             class="button">Accedi alla libreria</a><br>
     </section>
 
@@ -272,41 +279,45 @@
 
         <p class="testo-bio">Di seguito inserisco alcuni articoli pubblicati e non, in attesa di essere pubblicati.</p>
 
-        <a href="https://www.marinecue.it/2019/11/26/lultima-navi-corazzate-italiane/?fbclid=IwAR0lA_MsNa0vLXeKZBHhD7tJL6gtWS1vdSau_TumfoYG6ohc9OEuZ3M593Y" target="_blank" style="text-decoration: none; display: block;">
+        <a href="https://www.marinecue.it/2019/11/26/lultima-navi-corazzate-italiane/?fbclid=IwAR0lA_MsNa0vLXeKZBHhD7tJL6gtWS1vdSau_TumfoYG6ohc9OEuZ3M593Y"
+            target="_blank" style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L’ultima delle navi corazzate italiane</h3>
                 <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 26 novembre 2019</span>
             </div>
         </a>
-        
-        <a href="https://www.ilprimatonazionale.it/cultura/straordinario-esempio-coraggio-genialita-78-anni-impresa-alessandria-140311/?fbclid=IwAR1Ibtd083XbdU9CkIS_kYYEgZVqqnxoXut_SwoBkC5y8cdGlE6dlmxYmGw" target="_blank" style="text-decoration: none; display: block;">
+
+        <a href="https://www.ilprimatonazionale.it/cultura/straordinario-esempio-coraggio-genialita-78-anni-impresa-alessandria-140311/?fbclid=IwAR1Ibtd083XbdU9CkIS_kYYEgZVqqnxoXut_SwoBkC5y8cdGlE6dlmxYmGw"
+            target="_blank" style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L’impresa di Alessandria</h3>
                 <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 19 dicembre 2019.</span>
             </div>
         </a>
-        
-        <a href="https://www.marinecue.it/2019/12/28/propulsione-azi-po-d/?fbclid=IwAR3swhCOQoDxO8jVCKr4lNgPXfm9h-sENsL7FfYiCheBHM40UDrzny-wsxY" target="_blank" style="text-decoration: none; display: block;">
+
+        <a href="https://www.marinecue.it/2019/12/28/propulsione-azi-po-d/?fbclid=IwAR3swhCOQoDxO8jVCKr4lNgPXfm9h-sENsL7FfYiCheBHM40UDrzny-wsxY"
+            target="_blank" style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">Propulsione AZI.PO.D.</h3>
                 <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 28 dicembre 2019</span>
             </div>
         </a>
-        
-        <a href="https://www.marinecue.it/2020/01/21/ugello-kort-e-voith-schneider" target="_blank" style="text-decoration: none; display: block;">
+
+        <a href="https://www.marinecue.it/2020/01/21/ugello-kort-e-voith-schneider" target="_blank"
+            style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">Ugello Kort e Voith Schneider</h3>
                 <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 21 gennaio 2020</span>
             </div>
         </a>
-        
+
         <a href="La_battaglia_di_Tarnova.pdf" target="_blank" style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">La battaglia di Tarnova</h3>
                 <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo NON ATTUALMENTE pubblicato</span>
             </div>
         </a>
-        
+
         <a href="Impresa_dei_mille.pdf" target="_blank" style="text-decoration: none; display: block;">
             <div class="box-articolo">
                 <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L'impresa dei mille</h3>
