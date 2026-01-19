@@ -39,6 +39,31 @@
             margin: 0 auto;
         }
 
+        /* --- PER I BOX --- */
+        .box-articolo {
+            /* Questa regola fa sì che bordo e padding siano inclusi nella larghezza totale */
+            box-sizing: border-box; 
+            
+            border: 2px solid #000000;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            
+            /* Larghezza dinamica: occupa tutto lo spazio disponibile... */
+            width: 100%;
+            /* ...ma non superare mai i 400px (per il PC) */
+            max-width: 400px;
+            
+            background-color: #dfdbdb;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* ----------------------------------------- */
+
+        .box-articolo:hover {
+            background-color: #9acbf7;
+            cursor: pointer;
+        }
+
         nav {
             display: flex;
             gap: 20px;
@@ -74,6 +99,25 @@
             margin-bottom: 20px;
         }
 
+        .testo-bio {
+            text-align: center;
+            /* Allineamento a sinistra */
+            line-height: 1.8;
+            /* Interlinea ampia professionale */
+            font-size: 17px;
+            /* Dimensione ottima per lettura */
+            color: #000000;
+            /* Grigio scuro "antracite" */
+            margin-bottom: 20px;
+            /* Spazio tra i paragrafi */
+            max-width: 800px;
+            /* Evita righe troppo lunghe su schermi grandi */
+            margin-left: auto;
+            /* Centra il blocco nella pagina */
+            margin-right: auto;
+        }
+
+        /* --- MODIFICHE APPLICATE QUI --- */
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -81,8 +125,18 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 12px;
+            margin: 5px;
+            /* Rende fluida l'animazione di trasformazione e colore */
+            transition: transform 0.2s, background-color 0.2s;
         }
+
+        /* Nuovo blocco per l'effetto al passaggio del mouse */
+        .button:hover {
+            transform: scale(1.05);       /* Ingrandisce del 5% */
+            background-color: #004499;    /* Diventa blu scuro */
+            cursor: pointer;
+        }
+        /* ------------------------------- */
 
         footer {
             position: fixed;
@@ -134,7 +188,7 @@
             }
 
             .button {
-                margin-top: 10px;
+                margin: 10px 5px;
                 padding: 8px 16px;
                 font-size: 14px;
             }
@@ -168,6 +222,15 @@
 
             section:nth-of-type(1) {
                 margin-bottom: 0px;
+            }
+
+            .testo-bio {
+                text-align: center;
+                /* Mantiene sinistra anche su mobile */
+                font-size: 16px;
+                line-height: 1.6;
+                padding: 0 10px;
+                /* Margine laterale di sicurezza */
             }
 
             footer {
@@ -205,22 +268,32 @@
     </header>
 
     <section>
-        <h2>CHI SONO</h2>
-        <p>Sono un ingegnere navale con una grande passione per il mare, la navigazione e la progettazione. Amo affrontare nuove sfide e migliorarmi costantemente. Sono profondamente attratto
-            dall’innovazione tecnologica e non ho mai temuto il cambiamento, al contrario, lo considero un’opportunità
-            di crescita, scoperta e miglioramento continuo.
+        <h2>CHI SONO</h2> 
+        <p class="testo-bio">Sono un ingegnere navale con una grande passione per il mare, la navigazione e la progettazione. Amo
+            affrontare nuove sfide e migliorarmi costantemente. Sono profondamente attratto dall’innovazione tecnologica
+            e non ho mai temuto il cambiamento, al contrario, lo considero un’opportunità di crescita, scoperta e
+            miglioramento continuo.
         </p>
-        <div style="height: 25px;"></div> 
+   
+        <div style="height: 15px;"></div>
         <a href="Curriculum_Vitae_mod2.pdf" class="button">Scarica il mio CV</a>
-        <div style="height: 25px;"></div> 
+
+        <div style="height: 40px;"></div>
+
         <h2>CONTATTI</h2>
+        <p class="testo-bio">
+            Puoi contattarmi via mail o tramite il mio profilo LinkedIn.
+        </p>
         <a href="mailto:bianconifederico94@gmail.com" class="button">Invia una mail</a>
         <a href="https://www.linkedin.com/in/federico-bianconi-27238715a/" target="_blank" class="button">LinkedIn</a>
     </section>
 
-   <footer>
+    <footer>
         <p>&copy; Gennaio 2026 | Tutti i diritti riservati</p>
-        <p style="font-size: 11px; margin-top: 5px;">Questo sito non ti chiederà i biscottini</p>
+        <p style="font-size: 10px; margin: 5px 0 0 0; opacity: 0.8;">
+            Questo sito non ti chiederà i 
+            <a href="Legacy.html" style="color: white; text-decoration: underline;">biscottini</a>
+        </p>
     </footer>
 </body>
 
