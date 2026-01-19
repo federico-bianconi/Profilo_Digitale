@@ -85,7 +85,8 @@
         /* --- STILE DEL TESTO (Uguale a Media/Bio) --- */
         .policy-text {
             text-align: left;
-            line-height: 1.8;       /* Interlinea PC */
+            line-height: 1.8;
+            /* Interlinea PC */
             font-size: 17px;
             color: #000000;
             margin-bottom: 30px;
@@ -99,7 +100,7 @@
             margin-bottom: 20px;
             padding-left: 20px;
         }
-        
+
         .policy-text li {
             margin-bottom: 10px;
         }
@@ -108,7 +109,7 @@
             color: #0073e6;
             text-decoration: none;
         }
-        
+
         .policy-text a:hover {
             text-decoration: underline;
         }
@@ -121,10 +122,10 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            
+
             /* Spaziatura per PC: larghi e comodi */
-            margin: 12px 20px; 
-            
+            margin: 12px 20px;
+
             transition: transform 0.2s, background-color 0.2s;
             cursor: pointer;
             border: none;
@@ -203,10 +204,16 @@
                 margin: 0;
             }
 
+            nav a:hover {
+                transform: none !important;
+                background-color: rgba(255, 255, 255, 0.1) !important;
+            }
+
             /* Adattamento Testo su Mobile */
             .policy-text {
                 font-size: 16px;
-                line-height: 1.6; /* Interlinea Mobile */
+                line-height: 1.6;
+                /* Interlinea Mobile */
                 padding: 0 5px;
             }
 
@@ -218,10 +225,11 @@
             }
 
             .button:hover {
-        transform: scale(1.05);       /* Ingrandisce */
-        background-color: #004499;    /* Cambia colore */
-        cursor: pointer;
-    }
+                transform: none !important;
+                /* Impedisce l'ingrandimento */
+                background-color: #0073e6 !important;
+                /* Mantiene il colore azzurro originale */
+            }
 
             section {
                 padding: 10px;
@@ -241,7 +249,7 @@
 </head>
 
 <body>
-    
+
 
     <section id="main-selector">
         <h2 style="border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 30px;">INFORMATIVA LEGALE</h2>
@@ -265,7 +273,7 @@
         <div class="policy-text">
             <p><strong>1. Titolare del Trattamento</strong><br>
                 Il titolare del trattamento dei dati è <strong>Federico Bianconi</strong>.<br>
-                Per qualsiasi comunicazione o richiesta di cancellazione dati: 
+                Per qualsiasi comunicazione o richiesta di cancellazione dati:
                 <a href="mailto:bianconifederico94@gmail.com">bianconifederico94@gmail.com</a>.
             </p>
 
@@ -273,13 +281,17 @@
                 Questo sito raccoglie due tipologie di dati:
             </p>
             <ul>
-                <li><strong>Dati di navigazione (Log di sistema):</strong> I sistemi informatici preposti al funzionamento
+                <li><strong>Dati di navigazione (Log di sistema):</strong> I sistemi informatici preposti al
+                    funzionamento
                     di questo sito (ospitato su GitHub Pages) acquisiscono automaticamente alcuni dati tecnici, come gli
-                    indirizzi IP o i nomi a dominio dei computer utilizzati dagli utenti. Questi dati vengono utilizzati al
-                    solo fine di ricavare informazioni statistiche anonime e per controllare il corretto funzionamento del
+                    indirizzi IP o i nomi a dominio dei computer utilizzati dagli utenti. Questi dati vengono utilizzati
+                    al
+                    solo fine di ricavare informazioni statistiche anonime e per controllare il corretto funzionamento
+                    del
                     sito.</li>
                 <li><strong>Dati forniti volontariamente:</strong> L'invio facoltativo, esplicito e volontario di posta
-                    elettronica agli indirizzi indicati su questo sito comporta la successiva acquisizione dell'indirizzo
+                    elettronica agli indirizzi indicati su questo sito comporta la successiva acquisizione
+                    dell'indirizzo
                     del mittente, necessario per rispondere alle richieste.</li>
             </ul>
 
@@ -298,7 +310,8 @@
             </p>
 
             <p><strong>5. Diritti dell'Utente</strong><br>
-                In qualità di interessato, hai il diritto di chiedere al Titolare l'accesso ai tuoi dati, la rettifica o la
+                In qualità di interessato, hai il diritto di chiedere al Titolare l'accesso ai tuoi dati, la rettifica o
+                la
                 cancellazione degli stessi, inviando una semplice email all'indirizzo di contatto.
             </p>
         </div>
@@ -319,13 +332,16 @@
             </p>
 
             <p><strong>2. Nessun Cookie di Profilazione</strong><br>
-                Questo sito <strong>NON utilizza</strong> cookie di profilazione, marketing o tracciamento pubblicitario.
-                Non viene fatto uso di Google Analytics o pixel di tracciamento di social network (Facebook, LinkedIn, ecc.).
+                Questo sito <strong>NON utilizza</strong> cookie di profilazione, marketing o tracciamento
+                pubblicitario.
+                Non viene fatto uso di Google Analytics o pixel di tracciamento di social network (Facebook, LinkedIn,
+                ecc.).
             </p>
 
             <p><strong>3. Cookie Tecnici</strong><br>
                 Il sito utilizza esclusivamente cookie tecnici (o tecnologie analoghe) strettamente necessari per il
-                funzionamento del servizio, erogati dalla piattaforma di hosting <strong>GitHub Pages</strong>. Tali cookie
+                funzionamento del servizio, erogati dalla piattaforma di hosting <strong>GitHub Pages</strong>. Tali
+                cookie
                 servono per:
             </p>
             <ul>
@@ -381,5 +397,7 @@
     </script>
 
 </body>
+
+</html>
 
 </html>
