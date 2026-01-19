@@ -39,6 +39,31 @@
             margin: 0 auto;
         }
 
+        /* --- PER I BOX --- */
+        .box-articolo {
+            /* Questa regola fa sì che bordo e padding siano inclusi nella larghezza totale */
+            box-sizing: border-box; 
+            
+            border: 2px solid #000000;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            
+            /* Larghezza dinamica: occupa tutto lo spazio disponibile... */
+            width: 100%;
+            /* ...ma non superare mai i 400px (per il PC) */
+            max-width: 400px;
+            
+            background-color: #dfdbdb;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* ----------------------------------------- */
+
+        .box-articolo:hover {
+            background-color: #9acbf7;
+            cursor: pointer;
+        }
+
         nav {
             display: flex;
             gap: 20px;
@@ -74,6 +99,17 @@
             margin-bottom: 20px;
         }
 
+        .testo-bio {
+            text-align: center;
+            line-height: 1.8;
+            font-size: 17px;
+            color: #000000;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -82,6 +118,13 @@
             text-decoration: none;
             border-radius: 5px;
             margin-top: 12px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background-color: #004499;
+            cursor: pointer;
         }
 
         footer {
@@ -170,6 +213,13 @@
                 margin-bottom: 0px;
             }
 
+            .testo-bio {
+                text-align: center;
+                font-size: 16px;
+                line-height: 1.6;
+                padding: 0 10px;
+            }
+
             footer {
                 position: fixed;
                 bottom: 0;
@@ -206,37 +256,68 @@
 
     <section>
         <h2>BIBLIOGRAFIA DIGITALE</h2>
-        <p>Libreria digitale per appassionati del mare ed ingegneri navali e non.</p>
-        <a href="https://drive.google.com/drive/folders/1FVMUgNj9eDn8-FvDhvzF1rDFYUcB5P8N?usp=sharing" class="button">Accedi alla libreria</a><br>        
+        <p class="testo-bio">Libreria digitale per appassionati del mare ed ingegneri navali e curiosi.</p>
+        <a href="https://drive.google.com/drive/folders/1FVMUgNj9eDn8-FvDhvzF1rDFYUcB5P8N?usp=sharing"
+            class="button">Accedi alla libreria</a><br>
     </section>
 
-    <section style="text-align: center;"> <h2 style="margin-bottom: 30px;">LEGGI I MIEI ARTICOLI</h2>
+    <section style="text-align: center;">
+        <h2 style="margin-bottom: 30px;">LEGGI I MIEI ARTICOLI</h2>
 
-        <p style="margin-bottom: 10px;">L’ultima delle navi corazzate italiane.<br> <span style="font-size: 13px;">Articolo pubblicato il 26 novembre 2019.</span></p>
-        <a href="https://www.marinecue.it/2019/11/26/lultima-navi-corazzate-italiane/?fbclid=IwAR0lA_MsNa0vLXeKZBHhD7tJL6gtWS1vdSau_TumfoYG6ohc9OEuZ3M593Y" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
-    
-        <p style="margin-bottom: 10px;">“Uno straordinario esempio di coraggio e genialità”. L’impresa di Alessandria.<br> <span style="font-size: 13px;">Articolo pubblicato il 19 dicembre 2019.</span></p>
-        <a href="https://www.ilprimatonazionale.it/cultura/straordinario-esempio-coraggio-genialita-78-anni-impresa-alessandria-140311/?fbclid=IwAR1Ibtd083XbdU9CkIS_kYYEgZVqqnxoXut_SwoBkC5y8cdGlE6dlmxYmGw" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
-    
-        <p style="margin-bottom: 10px;">Propulsione AZI.PO.D.<br> <span style="font-size: 13px;">Articolo pubblicato il 28 dicembre 2019.</span></p>
-        <a href="https://www.marinecue.it/2019/12/28/propulsione-azi-po-d/?fbclid=IwAR3swhCOQoDxO8jVCKr4lNgPXfm9h-sENsL7FfYiCheBHM40UDrzny-wsxY" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
+        <p class="testo-bio">Di seguito inserisco alcuni articoli pubblicati e non, in attesa di essere pubblicati.</p>
 
-        <p style="margin-bottom: 10px;">Ugello Kort e Voith Schneider.<br> <span style="font-size: 13px;">Articolo pubblicato il 21 gennaio 2020.</span></p>
-        <a href="https://www.marinecue.it/2020/01/21/ugello-kort-e-voith-schneider" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
+        <a href="https://www.marinecue.it/2019/11/26/lultima-navi-corazzate-italiane/?fbclid=IwAR0lA_MsNa0vLXeKZBHhD7tJL6gtWS1vdSau_TumfoYG6ohc9OEuZ3M593Y" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L’ultima delle navi corazzate italiane</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 26 novembre 2019</span>
+            </div>
+        </a>
+        
+        <a href="https://www.ilprimatonazionale.it/cultura/straordinario-esempio-coraggio-genialita-78-anni-impresa-alessandria-140311/?fbclid=IwAR1Ibtd083XbdU9CkIS_kYYEgZVqqnxoXut_SwoBkC5y8cdGlE6dlmxYmGw" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L’impresa di Alessandria</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 19 dicembre 2019.</span>
+            </div>
+        </a>
+        
+        <a href="https://www.marinecue.it/2019/12/28/propulsione-azi-po-d/?fbclid=IwAR3swhCOQoDxO8jVCKr4lNgPXfm9h-sENsL7FfYiCheBHM40UDrzny-wsxY" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">Propulsione AZI.PO.D.</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 28 dicembre 2019</span>
+            </div>
+        </a>
+        
+        <a href="https://www.marinecue.it/2020/01/21/ugello-kort-e-voith-schneider" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">Ugello Kort e Voith Schneider</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo pubblicato il 21 gennaio 2020</span>
+            </div>
+        </a>
+        
+        <a href="La_battaglia_di_Tarnova.pdf" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">La battaglia di Tarnova</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo NON ATTUALMENTE pubblicato</span>
+            </div>
+        </a>
+        
+        <a href="Impresa_dei_mille.pdf" target="_blank" style="text-decoration: none; display: block;">
+            <div class="box-articolo">
+                <h3 style="margin-bottom: 10px; color: rgb(0, 0, 0);">L'impresa dei mille</h3>
+                <span style="font-size: 13px; color: rgb(0, 0, 0);">Articolo NON ATTUALMENTE pubblicato.</span>
+            </div>
+        </a>
 
-        <p style="margin-bottom: 10px;">La battaglia di Tarnova.<br> <span style="font-size: 13px;">Articolo NON ATTUALMENTE pubblicato.</span></p>
-        <a href="La_battaglia_di_Tarnova.pdf" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
+    </section>
 
-        <p style="margin-bottom: 10px;">L'impresa dei mille<br> <span style="font-size: 13px;">Articolo NON ATTUALMENTE pubblicato.</span></p>
-        <a href="Impresa_dei_mille.pdf" target="_blank" class="button" style="display: inline-block; margin-bottom: 30px;">Leggi</a>
-    
-    </section> 
-    
-    <div style="height: 100px;"></div> 
+    <div style="height: 100px;"></div>
 
     <footer>
         <p>&copy; Gennaio 2026 | Tutti i diritti riservati</p>
-        <p style="font-size: 11px; margin-top: 5px;">Questo sito non ti chiederà i biscottini</p>
+        <p style="font-size: 10px; margin: 5px 0 0 0; opacity: 0.8;">
+            Questo sito non ti chiederà i
+            <a href="Legacy.html" style="color: white; text-decoration: underline;">biscottini</a>
+        </p>
     </footer>
 </body>
 
