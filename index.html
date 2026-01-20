@@ -6,6 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Profilo Digitale</title>
     <style>
+        .scroll-indicator {
+            display: none;
+            position: fixed;
+            bottom: 85px;
+            /* Leggermente aggiustato */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+
+            /* --- NUOVO STILE CIRCOLARE --- */
+            width: 50px;
+            height: 50px;
+            background-color: #0073e6;
+            /* Sfondo blu semi-trasparente */
+            color: white;
+            /* Freccia bianca */
+            font-size: 28px;
+            border-radius: 50%;
+            /* Rende il box un cerchio perfetto */
+            text-align: center;
+            line-height: 50px;
+            /* Centra verticalmente la freccia nel cerchio */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            /* Ombra sotto il cerchio */
+            text-shadow: none;
+            /* Rimuove l'alone precedente */
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        @media (min-width: 601px) {
+            .scroll-indicator {
+                /* Attualmente è 85px su mobile. 
+                   Portiamolo a 135px su PC per alzarlo di 50 pixel.
+                   Aumenta questo numero se la vuoi ancora più in alto. */
+                bottom: 135px; 
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,45 +72,6 @@
             overflow-y: auto;
         }
 
-        /* --- 1. STILE FRECCIA (BASE) --- */
-        #scrollArrow {
-            display: none; /* Nascosta di default, ci pensa lo script ad attivarla */
-            position: fixed;
-            bottom: 85px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-
-            /* Grafica */
-            width: 50px;
-            height: 50px;
-            background-color: #0073e6;
-            color: white;
-            font-size: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 50px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            text-shadow: none;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-15px); }
-            60% { transform: translateX(-50%) translateY(-7px); }
-        }
-
-        /* --- 2. REGOLA NUCLEARE PER PC --- */
-        /* Se lo schermo è più largo di 601px, la freccia DEVE sparire */
-        @media screen and (max-width: 600px) {
-            #scrollArrow {
-                display: none !important;
-            }
-        }
-
-        /* --- HEADER --- */
         header {
             background: linear-gradient(180deg, #0073e6 0%, #00aaff 100%);
             color: white;
@@ -78,25 +97,32 @@
             margin: 0 auto;
         }
 
-        /* --- BOX ARTICOLI (Se presenti) --- */
+        /* --- PER I BOX --- */
         .box-articolo {
+            /* Questa regola fa sì che bordo e padding siano inclusi nella larghezza totale */
             box-sizing: border-box;
+
             border: 2px solid #000000;
             border-radius: 15px;
             padding: 20px;
             margin: 20px auto;
+
+            /* Larghezza dinamica: occupa tutto lo spazio disponibile... */
             width: 100%;
+            /* ...ma non superare mai i 400px (per il PC) */
             max-width: 400px;
+
             background-color: #dfdbdb;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        /* ----------------------------------------- */
 
         .box-articolo:hover {
             background-color: #9acbf7;
             cursor: pointer;
         }
 
-        /* --- NAVIGAZIONE --- */
         nav {
             display: flex;
             gap: 20px;
@@ -134,15 +160,23 @@
 
         .testo-bio {
             text-align: center;
+            /* Allineamento a sinistra */
             line-height: 1.8;
+            /* Interlinea ampia professionale */
             font-size: 17px;
+            /* Dimensione ottima per lettura */
             color: #000000;
+            /* Grigio scuro "antracite" */
             margin-bottom: 20px;
+            /* Spazio tra i paragrafi */
             max-width: 800px;
+            /* Evita righe troppo lunghe su schermi grandi */
             margin-left: auto;
+            /* Centra il blocco nella pagina */
             margin-right: auto;
         }
 
+        /* --- MODIFICHE APPLICATE QUI --- */
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -151,14 +185,20 @@
             text-decoration: none;
             border-radius: 5px;
             margin: 5px;
+            /* Rende fluida l'animazione di trasformazione e colore */
             transition: transform 0.2s, background-color 0.2s;
         }
 
+        /* Nuovo blocco per l'effetto al passaggio del mouse */
         .button:hover {
             transform: scale(1.05);
+            /* Ingrandisce del 5% */
             background-color: #004499;
+            /* Diventa blu scuro */
             cursor: pointer;
         }
+
+        /* ------------------------------- */
 
         footer {
             position: fixed;
@@ -172,11 +212,7 @@
             z-index: 1000;
         }
 
-        /* --- 3. MOBILE (Sotto 601px) --- */
-        @media (max-width: 601px) {
-            
-            /* NOTA: Qui NON ci deve essere nessuna regola per .scroll-indicator */
-            /* Lasciamo fare tutto al JavaScript e al CSS base */
+        @media (max-width: 600px) {
 
             header {
                 flex-direction: column;
@@ -220,10 +256,11 @@
                 font-size: 14px;
             }
 
-            /* RESET HOVER PER MOBILE: Evita che i pulsanti restino blu scuro */
             .button:hover {
                 transform: none !important;
+                /* Impedisce l'ingrandimento */
                 background-color: #0073e6 !important;
+                /* Mantiene il colore azzurro originale */
             }
 
             .fixed-buttons {
@@ -264,13 +301,16 @@
 
             .testo-bio {
                 text-align: center;
+                /* Mantiene sinistra anche su mobile */
                 font-size: 16px;
                 line-height: 1.6;
                 padding: 0 10px;
+                /* Margine laterale di sicurezza */
             }
 
             .box-articolo:hover {
                 background-color: #dfdbdb !important;
+                /* Mantiene il grigio originale */
             }
 
             footer {
@@ -292,10 +332,8 @@
 </head>
 
 <body>
-    <div id="scrollArrow" onclick="scrollDown()">
-        &#8675; 
-    </div>
-
+    <div id="scrollArrow" class="scroll-indicator" onclick="scrollDown()">
+        &#8675; </div>
     <header>
         <div class="header-content">
             <img src="Io.JPG" alt="Foto Profilo" class="profile-pic">
@@ -341,55 +379,102 @@
     </footer>
 
     <script>
+        // --- VARIABILI GLOBALI ---
         var arrow = document.getElementById("scrollArrow");
-        var arrowHidden = false;
-        var autoHideTimer;
-
+        var arrowHidden = false; // "Memoria": diventa true se l'utente ha sceso o se sono passati 5s
+        var autoHideTimer;       // Il timer per i 5 secondi
+    
+        // --- FUNZIONE CERVELLO: CALCOLA SE MOSTRARE LA FRECCIA ---
         function checkScrollNecessity() {
+            // Sicurezza: se la freccia non esiste nella pagina, fermati
             if (!arrow) return;
-
-            // 1. SICUREZZA PC: Se lo schermo è > 600px, forza nascondi e esci.
-            if (window.innerWidth > 600) {
-                arrow.style.display = "none";
-                return;
-            }
-
+    
+            // Pulisci timer precedenti per evitare conflitti
             clearTimeout(autoHideTimer);
-
-            // 2. Controllo altezza per Mobile
+    
+            // CALCOLO: Il contenuto è più corto o uguale alla finestra visibile?
             if (document.body.scrollHeight <= window.innerHeight) {
+                // Pagina corta: Nascondi subito
                 arrow.style.display = "none";
-                arrowHidden = true;
+                // Non impostiamo arrowHidden=true qui, perché se la pagina si allunga (es. tab) deve poter ricomparire
             } else {
-                // Pagina lunga su mobile: mostra freccia
-                arrow.style.display = "block";
-                arrowHidden = false;
-
-                // Timer 5 secondi
-                autoHideTimer = setTimeout(function() {
-                    arrow.style.display = "none";
-                    arrowHidden = true;
-                }, 5000);
+                // Pagina lunga.
+                // Mostriamo la freccia SOLO SE l'utente non l'ha già "consumata" (scrollando o aspettando)
+                if (!arrowHidden) {
+                    arrow.style.display = "block";
+                    
+                    // Avvia il conto alla rovescia di 5 secondi
+                    autoHideTimer = setTimeout(function() {
+                        arrow.style.display = "none";
+                        arrowHidden = true; // Dopo 5s, considerala "vista" e non mostrarla più
+                    }, 5000);
+                }
             }
         }
-
-        function showContent(id) {} // Vuota (serve solo per Legacy)
-        function goBack() {}        // Vuota (serve solo per Legacy)
-
+    
+        // --- GESTIONE SCROLL UTENTE ---
+        window.onscroll = function() {
+            if (!arrow) return;
+    
+            // Se l'utente scorre di almeno 10 pixel...
+            if (window.scrollY > 10) {
+                arrow.style.display = "none"; // Nascondi
+                arrowHidden = true;           // Memorizza che l'utente ha sceso (non riapparirà tornando su)
+                clearTimeout(autoHideTimer);  // Ferma il timer se era attivo
+            }
+        };
+    
+        // --- GESTIONE PULSANTI (Solo per pagina Legacy.html) ---
+        // Queste funzioni sono scritte in modo sicuro: se usate su Home o Media non daranno errore
+        function showContent(id) {
+            // Nascondi tutto (se gli elementi esistono)
+            var main = document.getElementById('main-selector');
+            var priv = document.getElementById('privacy');
+            var cook = document.getElementById('cookies');
+    
+            if (main) main.style.display = 'none';
+            if (priv) priv.style.display = 'none';
+            if (cook) cook.style.display = 'none';
+            
+            // Mostra il target
+            var target = document.getElementById(id);
+            if (target) target.style.display = 'block';
+            
+            // Torna in cima
+            window.scrollTo(0, 0);
+            
+            // RESET IMPORTANTE: Stiamo cambiando "pagina virtuale", quindi diamo una nuova chance alla freccia
+            arrowHidden = false; 
+            arrow.style.display = "none"; // Reset visivo momentaneo
+            
+            // Ricalcola dopo 50ms (tempo tecnico per aggiornare il layout)
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        function goBack() {
+            var main = document.getElementById('main-selector');
+            var priv = document.getElementById('privacy');
+            var cook = document.getElementById('cookies');
+    
+            if (priv) priv.style.display = 'none';
+            if (cook) cook.style.display = 'none';
+            if (main) main.style.display = 'block';
+            
+            window.scrollTo(0, 0);
+    
+            // RESET IMPORTANTE
+            arrowHidden = false;
+            arrow.style.display = "none";
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        // --- CLICK SULLA FRECCIA ---
         function scrollDown() {
             window.scrollBy({ top: window.innerHeight / 1.5, behavior: 'smooth' });
         }
-
-        window.onscroll = function() {
-            if (!arrow || arrowHidden) return;
-            // Se su mobile scorri, nascondi subito
-            if (window.scrollY > 10) {
-                arrow.style.display = "none";
-                arrowHidden = true;
-                clearTimeout(autoHideTimer);
-            }
-        };
-
+    
+        // --- AVVIO AUTOMATICO ---
+        // Controlla al caricamento e se ridimensioni la finestra
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
     </script>
