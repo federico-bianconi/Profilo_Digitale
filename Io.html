@@ -14,44 +14,67 @@
             overflow-y: auto;
         }
 
-        /* --- 1. STILE FRECCIA (BASE) --- */
-        .scroll-indicator {
-            display: none; /* Nascosto di default */
-            position: fixed;
-            bottom: 85px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            animation: bounce 2s infinite;
-            cursor: pointer;
+      /* --- 1. CONTENITORE ESTERNO --- */
+    #scrollArrow {
+        display: none; /* Gestito dallo script */
+        position: fixed;
+        bottom: 85px; /* Altezza base Mobile */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        animation: bounce 2s infinite;
+        cursor: pointer;
+    }
 
-            /* Grafica */
-            width: 50px;
-            height: 50px;
-            background-color: #0073e6;
-            color: white;
-            font-size: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 50px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            text-shadow: none;
-        }
+    /* --- 2. IL CERCHIO (Piccolo e pulito) --- */
+    .circle-content {
+        width: 56px;
+        height: 56px;
+        background-color: #0073e6;
+        color: white;
+        border-radius: 50%;
+        
+        /* Flexbox per centrare */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        /* Ombra, niente bordo */
+        box-shadow: 0px 4px 12px rgba(0, 115, 230, 0.4);
+        border: none; 
+    }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-15px); }
-            60% { transform: translateX(-50%) translateY(-7px); }
-        }
+    /* --- 3. LA FRECCIA --- */
+    .arrow-icon {
+        font-size: 24px; 
+        line-height: 1; /* Rimuove spazi fantasma */
+        font-weight: bold;
+    }
 
-        @media (min-width: 601px) {
-            .scroll-indicator {
-                /* Attualmente è 85px su mobile. 
-                   Portiamolo a 135px su PC per alzarlo di 50 pixel.
-                   Aumenta questo numero se la vuoi ancora più in alto. */
-                bottom: 135px; 
-            }
+    /* --- 4. LA SCRITTA "Scorri" --- */
+    .arrow-text-inside {
+        font-size: 9px;
+        font-weight: normal; 
+        text-transform: none; 
+        
+        /* >>> QUI C'È IL DISTACCO <<< */
+        margin-top: 3px; /* 3 pixel di spazio tra freccia e testo */
+    }
+
+    /* --- 5. ANIMAZIONE RIMBALZO --- */
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-15px); }
+        60% { transform: translateX(-50%) translateY(-7px); }
+    }
+
+    /* --- 6. ALTEZZA SU PC --- */
+    @media (min-width: 601px) {
+        #scrollArrow {
+            bottom: 135px; 
         }
+    }
 
         header {
             background: linear-gradient(180deg, #0073e6 0%, #00aaff 100%);
@@ -288,8 +311,12 @@
 </head>
 
 <body>
-    <div id="scrollArrow" class="scroll-indicator" onclick="scrollDown()">
-        &#8675; 
+
+    <div id="scrollArrow" onclick="scrollDown()">
+        <div class="circle-content">
+            <span class="arrow-icon">&#8595;</span>
+            <span class="arrow-text-inside">Scorri</span>
+        </div>
     </div>
 
     <header>
@@ -403,53 +430,56 @@
     <script>
         // --- VARIABILI GLOBALI ---
         var arrow = document.getElementById("scrollArrow");
-        var arrowHidden = false; // "Memoria": diventa true se l'utente ha sceso o se sono passati 5s
-        var autoHideTimer;       // Il timer per i 5 secondi
+        var arrowHidden = false; 
+        var autoHideTimer;
     
-        // --- FUNZIONE CERVELLO: CALCOLA SE MOSTRARE LA FRECCIA ---
+        // --- FUNZIONE CERVELLO ---
         function checkScrollNecessity() {
-            // Sicurezza: se la freccia non esiste nella pagina, fermati
             if (!arrow) return;
+            
+            // Se l'abbiamo già nascosta (scroll o click), fermati
+            if (arrowHidden) return;
     
-            // Pulisci timer precedenti per evitare conflitti
             clearTimeout(autoHideTimer);
     
-            // CALCOLO: Il contenuto è più corto o uguale alla finestra visibile?
+            // Se la pagina è corta (tutta visibile) -> Nascondi
             if (document.body.scrollHeight <= window.innerHeight) {
-                // Pagina corta: Nascondi subito
                 arrow.style.display = "none";
-                // Non impostiamo arrowHidden=true qui, perché se la pagina si allunga (es. tab) deve poter ricomparire
+                arrowHidden = true; 
             } else {
-                // Pagina lunga.
-                // Mostriamo la freccia SOLO SE l'utente non l'ha già "consumata" (scrollando o aspettando)
-                if (!arrowHidden) {
-                    arrow.style.display = "block";
-                    
-                    // Avvia il conto alla rovescia di 5 secondi
-                    autoHideTimer = setTimeout(function() {
-                        arrow.style.display = "none";
-                        arrowHidden = true; // Dopo 5s, considerala "vista" e non mostrarla più
-                    }, 5000);
-                }
+                // Se la pagina è lunga -> Mostra per 5 secondi
+                arrow.style.display = "block";
+                autoHideTimer = setTimeout(function() {
+                    arrow.style.display = "none";
+                    arrowHidden = true; 
+                }, 5000);
             }
         }
     
-        // --- GESTIONE SCROLL UTENTE ---
+        // --- NUOVA FUNZIONE SCROLL: VAI A FINE PAGINA ---
+        function scrollDown() {
+            window.scrollTo({
+                top: document.body.scrollHeight, // Altezza totale del documento
+                behavior: 'smooth'
+            });
+            
+            // Opzionale: Nascondiamo subito la freccia dato che abbiamo cliccato
+            arrow.style.display = "none";
+            arrowHidden = true;
+        }
+    
+        // --- RILEVA SCROLL UTENTE ---
         window.onscroll = function() {
             if (!arrow) return;
-    
-            // Se l'utente scorre di almeno 10 pixel...
             if (window.scrollY > 10) {
-                arrow.style.display = "none"; // Nascondi
-                arrowHidden = true;           // Memorizza che l'utente ha sceso (non riapparirà tornando su)
-                clearTimeout(autoHideTimer);  // Ferma il timer se era attivo
+                arrow.style.display = "none";
+                arrowHidden = true;
+                clearTimeout(autoHideTimer);
             }
         };
     
-        // --- GESTIONE PULSANTI (Solo per pagina Legacy.html) ---
-        // Queste funzioni sono scritte in modo sicuro: se usate su Home o Media non daranno errore
+        // --- FUNZIONI PER LEGACY.HTML (Innocue sulle altre) ---
         function showContent(id) {
-            // Nascondi tutto (se gli elementi esistono)
             var main = document.getElementById('main-selector');
             var priv = document.getElementById('privacy');
             var cook = document.getElementById('cookies');
@@ -458,18 +488,14 @@
             if (priv) priv.style.display = 'none';
             if (cook) cook.style.display = 'none';
             
-            // Mostra il target
             var target = document.getElementById(id);
             if (target) target.style.display = 'block';
             
-            // Torna in cima
             window.scrollTo(0, 0);
             
-            // RESET IMPORTANTE: Stiamo cambiando "pagina virtuale", quindi diamo una nuova chance alla freccia
+            // Reset freccia quando cambi scheda
             arrowHidden = false; 
-            arrow.style.display = "none"; // Reset visivo momentaneo
-            
-            // Ricalcola dopo 50ms (tempo tecnico per aggiornare il layout)
+            arrow.style.display = "none"; 
             setTimeout(checkScrollNecessity, 50);
         }
     
@@ -484,19 +510,13 @@
             
             window.scrollTo(0, 0);
     
-            // RESET IMPORTANTE
+            // Reset freccia quando torni indietro
             arrowHidden = false;
             arrow.style.display = "none";
             setTimeout(checkScrollNecessity, 50);
         }
     
-        // --- CLICK SULLA FRECCIA ---
-        function scrollDown() {
-            window.scrollBy({ top: window.innerHeight / 1.5, behavior: 'smooth' });
-        }
-    
-        // --- AVVIO AUTOMATICO ---
-        // Controlla al caricamento e se ridimensioni la finestra
+        // --- AVVIO ---
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
     </script>
