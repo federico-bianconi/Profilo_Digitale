@@ -44,11 +44,12 @@
             60% { transform: translateX(-50%) translateY(-7px); }
         }
 
-        /* --- 2. REGOLA NUCLEARE PER PC --- */
-        /* Se lo schermo è più largo di 601px, la freccia DEVE sparire */
-        @media screen and (min-width: 601px) {
+        @media (min-width: 601px) {
             .scroll-indicator {
-                display: none !important;
+                /* Attualmente è 85px su mobile. 
+                   Portiamolo a 135px su PC per alzarlo di 50 pixel.
+                   Aumenta questo numero se la vuoi ancora più in alto. */
+                bottom: 135px; 
             }
         }
 
@@ -172,8 +173,6 @@
 
         /* --- 3. MOBILE (Sotto 601px) --- */
         @media (max-width: 600px) {
-
-            /* RIMOSSO IL BLOCCO CHE NASCONDEVA LA FRECCIA */
 
             header {
                 flex-direction: column;
@@ -402,54 +401,102 @@
     </footer>
 
     <script>
+        // --- VARIABILI GLOBALI ---
         var arrow = document.getElementById("scrollArrow");
-        var arrowHidden = false;
-        var autoHideTimer;
+        var arrowHidden = false; // "Memoria": diventa true se l'utente ha sceso o se sono passati 5s
+        var autoHideTimer;       // Il timer per i 5 secondi
     
+        // --- FUNZIONE CERVELLO: CALCOLA SE MOSTRARE LA FRECCIA ---
         function checkScrollNecessity() {
+            // Sicurezza: se la freccia non esiste nella pagina, fermati
             if (!arrow) return;
     
-            // 1. SICUREZZA PC: Se lo schermo è > 600px, forza nascondi e esci.
-            if (window.innerWidth > 600) {
-                arrow.style.display = "none";
-                return;
-            }
-    
+            // Pulisci timer precedenti per evitare conflitti
             clearTimeout(autoHideTimer);
     
-            // 2. Controllo Altezza per Mobile
+            // CALCOLO: Il contenuto è più corto o uguale alla finestra visibile?
             if (document.body.scrollHeight <= window.innerHeight) {
+                // Pagina corta: Nascondi subito
                 arrow.style.display = "none";
-                arrowHidden = true;
+                // Non impostiamo arrowHidden=true qui, perché se la pagina si allunga (es. tab) deve poter ricomparire
             } else {
-                // Pagina lunga: mostra freccia
-                arrow.style.display = "block";
-                arrowHidden = false;
-    
-                // Timer 5 secondi
-                autoHideTimer = setTimeout(function() {
-                    arrow.style.display = "none";
-                    arrowHidden = true;
-                }, 5000);
+                // Pagina lunga.
+                // Mostriamo la freccia SOLO SE l'utente non l'ha già "consumata" (scrollando o aspettando)
+                if (!arrowHidden) {
+                    arrow.style.display = "block";
+                    
+                    // Avvia il conto alla rovescia di 5 secondi
+                    autoHideTimer = setTimeout(function() {
+                        arrow.style.display = "none";
+                        arrowHidden = true; // Dopo 5s, considerala "vista" e non mostrarla più
+                    }, 5000);
+                }
             }
         }
     
-        function showContent(id) {} // Vuota
-        function goBack() {}        // Vuota
+        // --- GESTIONE SCROLL UTENTE ---
+        window.onscroll = function() {
+            if (!arrow) return;
     
+            // Se l'utente scorre di almeno 10 pixel...
+            if (window.scrollY > 10) {
+                arrow.style.display = "none"; // Nascondi
+                arrowHidden = true;           // Memorizza che l'utente ha sceso (non riapparirà tornando su)
+                clearTimeout(autoHideTimer);  // Ferma il timer se era attivo
+            }
+        };
+    
+        // --- GESTIONE PULSANTI (Solo per pagina Legacy.html) ---
+        // Queste funzioni sono scritte in modo sicuro: se usate su Home o Media non daranno errore
+        function showContent(id) {
+            // Nascondi tutto (se gli elementi esistono)
+            var main = document.getElementById('main-selector');
+            var priv = document.getElementById('privacy');
+            var cook = document.getElementById('cookies');
+    
+            if (main) main.style.display = 'none';
+            if (priv) priv.style.display = 'none';
+            if (cook) cook.style.display = 'none';
+            
+            // Mostra il target
+            var target = document.getElementById(id);
+            if (target) target.style.display = 'block';
+            
+            // Torna in cima
+            window.scrollTo(0, 0);
+            
+            // RESET IMPORTANTE: Stiamo cambiando "pagina virtuale", quindi diamo una nuova chance alla freccia
+            arrowHidden = false; 
+            arrow.style.display = "none"; // Reset visivo momentaneo
+            
+            // Ricalcola dopo 50ms (tempo tecnico per aggiornare il layout)
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        function goBack() {
+            var main = document.getElementById('main-selector');
+            var priv = document.getElementById('privacy');
+            var cook = document.getElementById('cookies');
+    
+            if (priv) priv.style.display = 'none';
+            if (cook) cook.style.display = 'none';
+            if (main) main.style.display = 'block';
+            
+            window.scrollTo(0, 0);
+    
+            // RESET IMPORTANTE
+            arrowHidden = false;
+            arrow.style.display = "none";
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        // --- CLICK SULLA FRECCIA ---
         function scrollDown() {
             window.scrollBy({ top: window.innerHeight / 1.5, behavior: 'smooth' });
         }
     
-        window.onscroll = function() {
-            if (!arrow || arrowHidden) return;
-            if (window.scrollY > 10) {
-                arrow.style.display = "none";
-                arrowHidden = true;
-                clearTimeout(autoHideTimer);
-            }
-        };
-    
+        // --- AVVIO AUTOMATICO ---
+        // Controlla al caricamento e se ridimensioni la finestra
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
     </script>
