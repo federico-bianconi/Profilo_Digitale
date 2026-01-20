@@ -6,35 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Note Legali</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            overflow-y: auto;
-        }
-
+        /* --- 1. CONTENITORE ESTERNO --- */
         #scrollArrow {
             display: none;
+            /* Gestito dallo script */
             position: fixed;
             bottom: 85px;
+            /* Altezza base Mobile */
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
             animation: bounce 2s infinite;
             cursor: pointer;
-            width: 50px;
-            height: 50px;
-            background-color: #0073e6;
-            color: white;
-            font-size: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 50px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            text-shadow: none;
         }
 
+        /* --- 2. IL CERCHIO (Piccolo e pulito) --- */
+        .circle-content {
+            width: 56px;
+            height: 56px;
+            background-color: #0073e6;
+            color: white;
+            border-radius: 50%;
+
+            /* Flexbox per centrare */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /* Ombra, niente bordo */
+            box-shadow: 0px 4px 12px rgba(0, 115, 230, 0.4);
+            border: none;
+        }
+
+        /* --- 3. LA FRECCIA --- */
+        .arrow-icon {
+            font-size: 24px;
+            line-height: 1;
+            /* Rimuove spazi fantasma */
+            font-weight: bold;
+        }
+
+        /* --- 4. LA SCRITTA "Scorri" --- */
+        .arrow-text-inside {
+            font-size: 9px;
+            font-weight: normal;
+            text-transform: none;
+
+            /* >>> QUI C'È IL DISTACCO <<< */
+            margin-top: 3px;
+            /* 3 pixel di spazio tra freccia e testo */
+        }
+
+        /* --- 5. ANIMAZIONE RIMBALZO --- */
         @keyframes bounce {
 
             0%,
@@ -54,13 +78,19 @@
             }
         }
 
+        /* --- 6. ALTEZZA SU PC --- */
         @media (min-width: 601px) {
-            .scroll-indicator {
-                /* Attualmente è 85px su mobile. 
-                   Portiamolo a 135px su PC per alzarlo di 50 pixel.
-                   Aumenta questo numero se la vuoi ancora più in alto. */
-                bottom: 135px; 
+            #scrollArrow {
+                bottom: 135px;
             }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
         header {
@@ -281,8 +311,11 @@
 
 <body>
 
-    <div id="scrollArrow" class="scroll-indicator" onclick="scrollDown()">
-        &#8675;
+    <div id="scrollArrow" onclick="scrollDown()">
+        <div class="circle-content">
+            <span class="arrow-icon">&#8595;</span>
+            <span class="arrow-text-inside">Scorri</span>
+        </div>
     </div>
 
     <section id="main-selector">
@@ -409,20 +442,26 @@
 
 
     <script>
+        // --- VARIABILI GLOBALI ---
         var arrow = document.getElementById("scrollArrow");
         var arrowHidden = false;
         var autoHideTimer;
 
+        // --- FUNZIONE CERVELLO ---
         function checkScrollNecessity() {
             if (!arrow) return;
-            if (arrowHidden) return; // Se l'ho già nascosta, fermati (salvo reset)
+
+            // Se l'abbiamo già nascosta (scroll o click), fermati
+            if (arrowHidden) return;
 
             clearTimeout(autoHideTimer);
 
+            // Se la pagina è corta (tutta visibile) -> Nascondi
             if (document.body.scrollHeight <= window.innerHeight) {
                 arrow.style.display = "none";
                 arrowHidden = true;
             } else {
+                // Se la pagina è lunga -> Mostra per 5 secondi
                 arrow.style.display = "block";
                 autoHideTimer = setTimeout(function () {
                     arrow.style.display = "none";
@@ -431,6 +470,29 @@
             }
         }
 
+        // --- NUOVA FUNZIONE SCROLL: VAI A FINE PAGINA ---
+        function scrollDown() {
+            window.scrollTo({
+                top: document.body.scrollHeight, // Altezza totale del documento
+                behavior: 'smooth'
+            });
+
+            // Opzionale: Nascondiamo subito la freccia dato che abbiamo cliccato
+            arrow.style.display = "none";
+            arrowHidden = true;
+        }
+
+        // --- RILEVA SCROLL UTENTE ---
+        window.onscroll = function () {
+            if (!arrow) return;
+            if (window.scrollY > 10) {
+                arrow.style.display = "none";
+                arrowHidden = true;
+                clearTimeout(autoHideTimer);
+            }
+        };
+
+        // --- FUNZIONI PER LEGACY.HTML (Innocue sulle altre) ---
         function showContent(id) {
             var main = document.getElementById('main-selector');
             var priv = document.getElementById('privacy');
@@ -445,8 +507,9 @@
 
             window.scrollTo(0, 0);
 
-            // RESET FRECCIA: Qui forziamo arrowHidden a false perché la pagina cambia
+            // Reset freccia quando cambi scheda
             arrowHidden = false;
+            arrow.style.display = "none";
             setTimeout(checkScrollNecessity, 50);
         }
 
@@ -461,24 +524,13 @@
 
             window.scrollTo(0, 0);
 
-            // RESET FRECCIA
+            // Reset freccia quando torni indietro
             arrowHidden = false;
+            arrow.style.display = "none";
             setTimeout(checkScrollNecessity, 50);
         }
 
-        function scrollDown() {
-            window.scrollBy({ top: window.innerHeight / 1.5, behavior: 'smooth' });
-        }
-
-        window.onscroll = function () {
-            if (!arrow) return;
-            if (window.scrollY > 10) {
-                arrow.style.display = "none";
-                arrowHidden = true;
-                clearTimeout(autoHideTimer);
-            }
-        };
-
+        // --- AVVIO ---
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
     </script>
