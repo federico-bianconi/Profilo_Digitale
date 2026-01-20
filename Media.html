@@ -6,6 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Profilo Digitale</title>
     <style>
+
+        /* --- INDICATORE DI SCROLL (FRECCIA) --- */
+        .scroll-indicator {
+            display: none;
+            position: fixed;
+            bottom: 85px;
+            /* Leggermente aggiustato */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+
+            /* --- NUOVO STILE CIRCOLARE --- */
+            width: 50px;
+            height: 50px;
+            background-color: #0073e6;
+            /* Sfondo blu semi-trasparente */
+            color: white;
+            /* Freccia bianca */
+            font-size: 28px;
+            border-radius: 50%;
+            /* Rende il box un cerchio perfetto */
+            text-align: center;
+            line-height: 50px;
+            /* Centra verticalmente la freccia nel cerchio */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            /* Ombra sotto il cerchio */
+            text-shadow: none;
+            /* Rimuove l'alone precedente */
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -39,26 +90,17 @@
             margin: 0 auto;
         }
 
-        /* --- PER I BOX --- */
         .box-articolo {
-            /* Questa regola fa sì che bordo e padding siano inclusi nella larghezza totale */
             box-sizing: border-box;
-
             border: 2px solid #000000;
             border-radius: 15px;
             padding: 20px;
             margin: 20px auto;
-
-            /* Larghezza dinamica: occupa tutto lo spazio disponibile... */
             width: 100%;
-            /* ...ma non superare mai i 400px (per il PC) */
             max-width: 400px;
-
             background-color: #dfdbdb;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        /* ----------------------------------------- */
 
         .box-articolo:hover {
             background-color: #9acbf7;
@@ -140,7 +182,13 @@
             z-index: 1000;
         }
 
+        /* --- MOBILE --- */
         @media (max-width: 601px) {
+            .scroll-indicator {
+                display: block;
+                /* Visibile su smartphone */
+            }
+
             header {
                 flex-direction: column;
                 align-items: stretch;
@@ -183,11 +231,10 @@
                 font-size: 14px;
             }
 
+            /* Blocca hover button */
             .button:hover {
                 transform: none !important;
-                /* Impedisce l'ingrandimento */
                 background-color: #0073e6 !important;
-                /* Mantiene il colore azzurro originale */
             }
 
             .fixed-buttons {
@@ -212,6 +259,7 @@
                 text-decoration: none;
             }
 
+            /* Blocca hover nav */
             nav a:hover {
                 transform: none !important;
                 background-color: rgba(255, 255, 255, 0.1) !important;
@@ -233,9 +281,9 @@
                 padding: 0 10px;
             }
 
+            /* Blocca hover box articoli */
             .box-articolo:hover {
                 background-color: #dfdbdb !important;
-                /* Mantiene il grigio originale */
             }
 
             footer {
@@ -272,10 +320,14 @@
         </nav>
     </header>
 
+    <div id="scrollArrow" class="scroll-indicator" onclick="scrollDown()">
+        &#8675;
+    </div>
+
     <section>
         <h2>BIBLIOGRAFIA DIGITALE</h2>
         <p class="testo-bio">Libreria digitale per appassionati del mare ed ingegneri navali e curiosi.</p>
-        <a href="Leggimi.pdf"
+        <a href="https://drive.google.com/drive/folders/1FVMUgNj9eDn8-FvDhvzF1rDFYUcB5P8N?usp=sharing"
             class="button">Accedi alla libreria</a><br>
     </section>
 
@@ -341,6 +393,89 @@
             <a href="Legacy.html" style="color: white; text-decoration: underline;">biscottini</a>
         </p>
     </footer>
+
+    <script>
+        // Variabili Globali
+        var arrow = document.getElementById("scrollArrow");
+        var arrowHidden = false;
+        var autoHideTimer; // Variabile per gestire il conto alla rovescia
+    
+        // --- 1. FUNZIONE CERVELLO: Decide se mostrare la freccia ---
+        function checkScrollNecessity() {
+            // Se siamo su PC, esci
+            if (window.innerWidth > 601) return;
+    
+            // Pulisci eventuali timer precedenti (resetta il conteggio)
+            clearTimeout(autoHideTimer);
+    
+            // Se la pagina è corta e non serve scorrere...
+            if (document.body.scrollHeight <= window.innerHeight) {
+                arrow.style.display = "none";
+                arrowHidden = true;
+            } else {
+                // Se la pagina è lunga:
+                arrow.style.display = "block"; // Mostra la freccia
+                arrowHidden = false;           // Riattiva il controllo scroll
+    
+                // *** LA CHICCA DEI 5 SECONDI ***
+                // Imposta un timer: fra 5000 millisecondi (5 secondi)...
+                autoHideTimer = setTimeout(function() {
+                    arrow.style.display = "none"; // ...nascondi la freccia
+                    arrowHidden = true;           // ...e segna che è nascosta
+                }, 5000);
+            }
+        }
+    
+        // --- 2. GESTIONE NAVIGAZIONE ---
+        function showContent(id) {
+            document.getElementById('main-selector').style.display = 'none';
+            document.getElementById('privacy').style.display = 'none';
+            document.getElementById('cookies').style.display = 'none';
+            
+            document.getElementById(id).style.display = 'block';
+            window.scrollTo(0, 0);
+    
+            // Resetta e Ricontrolla (con piccolo ritardo per caricamento)
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        function goBack() {
+            document.getElementById('privacy').style.display = 'none';
+            document.getElementById('cookies').style.display = 'none';
+            document.getElementById('main-selector').style.display = 'block';
+            
+            window.scrollTo(0,0);
+    
+            // Resetta e Ricontrolla
+            setTimeout(checkScrollNecessity, 50);
+        }
+    
+        // --- 3. GESTIONE SCROLL UTENTE ---
+        window.onscroll = function() {
+            if (arrowHidden) return;
+    
+            // Se l'utente scorre prima dei 5 secondi, nascondila subito
+            if (window.scrollY > 10) { 
+                arrow.style.display = "none";
+                arrowHidden = true;
+                clearTimeout(autoHideTimer); // Ferma il timer, non serve più
+            }
+        };
+        
+        // Funzione click sulla freccia
+        function scrollDown() {
+            window.scrollBy({
+                top: window.innerHeight / 1.5, 
+                behavior: 'smooth'
+            });
+        }
+    
+        // --- 4. CONTROLLO INIZIALE ---
+        window.addEventListener('load', checkScrollNecessity);
+        window.addEventListener('resize', checkScrollNecessity);
+    
+    </script>
+
 </body>
 
 </html>
