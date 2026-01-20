@@ -394,12 +394,22 @@
             }
 
             section {
-                padding: 4px;
-                padding-bottom: 5px;
+                padding: 20px 10px; /* 20px sopra/sotto, 10px lati */
+            }
+
+            section:first-of-type {
+                padding-top: 30px !important; 
             }
 
             section:nth-of-type(1) {
                 margin-bottom: 0px;
+            }
+
+            /* Regola l'altezza del titolo su Mobile */
+            section h2 {
+                margin-top: 0 !important;    /* Toglie lo spazio "casuale" del browser */
+                padding-top: 5px;           /* <--- MODIFICA QUESTO NUMERO per alzare/abbassare */
+                margin-bottom: 30px;         /* Spazio sotto il titolo */
             }
 
             .testo-bio {
@@ -459,6 +469,7 @@
 
     <section>
         <h2>CHI SONO</h2>
+
         <p class="testo-bio">Sono un ingegnere navale con una grande passione per il mare, la navigazione e la
             progettazione. Amo
             affrontare nuove sfide e migliorarmi costantemente. Sono profondamente attratto dall’innovazione tecnologica
@@ -498,9 +509,9 @@
             <h3>Menu Rapido</h3>
             <p>Scegli una destinazione:</p>
             
-            <button class="menu-btn" onclick="window.location.href='https://federico-bianconi.github.io/Profilo-Digitale/index.html'">Profilo Digitale</button>
+            <button class="menu-btn" onclick="window.location.href='index.html'">Profilo Digitale</button>
             
-            <button class="menu-btn" onclick="window.location.href='https://federico-bianconi.github.io/spazio-personale/'">Spazio Personale</button>
+            <button class="menu-btn" onclick="window.location.href='https://www.google.com'">Spazio Personale</button>
             
             <button class="menu-btn close-btn" onclick="closeSecretMenu()">Chiudi</button>
         </div>
