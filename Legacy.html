@@ -6,6 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Note Legali</title>
     <style>
+        .scroll-indicator {
+            display: none;
+            position: fixed;
+            bottom: 85px;
+            /* Leggermente aggiustato */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+
+            /* --- NUOVO STILE CIRCOLARE --- */
+            width: 50px;
+            height: 50px;
+            background-color: #0073e6;
+            /* Sfondo blu semi-trasparente */
+            color: white;
+            /* Freccia bianca */
+            font-size: 28px;
+            border-radius: 50%;
+            /* Rende il box un cerchio perfetto */
+            text-align: center;
+            line-height: 50px;
+            /* Centra verticalmente la freccia nel cerchio */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            /* Ombra sotto il cerchio */
+            text-shadow: none;
+            /* Rimuove l'alone precedente */
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -152,6 +201,11 @@
 
         /* --- MOBILE --- */
         @media (max-width: 601px) {
+
+            .scroll-indicator {
+                display: block;
+            }
+
             header {
                 flex-direction: column;
                 align-items: stretch;
@@ -255,6 +309,8 @@
 
 <body>
 
+    <div id="scrollArrow" class="scroll-indicator" onclick="scrollDown()">
+        &#8675; </div>
 
     <section id="main-selector">
         <h2 style="border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 30px;">INFORMATIVA LEGALE</h2>
@@ -401,8 +457,88 @@
         }
     </script>
 
-</body>
+<script>
+    // Variabili Globali
+    var arrow = document.getElementById("scrollArrow");
+    var arrowHidden = false;
+    var autoHideTimer; // Variabile per gestire il conto alla rovescia
 
-</html>
+    // --- 1. FUNZIONE CERVELLO: Decide se mostrare la freccia ---
+    function checkScrollNecessity() {
+        // Se siamo su PC, esci
+        if (window.innerWidth > 601) return;
+
+        // Pulisci eventuali timer precedenti (resetta il conteggio)
+        clearTimeout(autoHideTimer);
+
+        // Se la pagina è corta e non serve scorrere...
+        if (document.body.scrollHeight <= window.innerHeight) {
+            arrow.style.display = "none";
+            arrowHidden = true;
+        } else {
+            // Se la pagina è lunga:
+            arrow.style.display = "block"; // Mostra la freccia
+            arrowHidden = false;           // Riattiva il controllo scroll
+
+            // *** LA CHICCA DEI 5 SECONDI ***
+            // Imposta un timer: fra 5000 millisecondi (5 secondi)...
+            autoHideTimer = setTimeout(function() {
+                arrow.style.display = "none"; // ...nascondi la freccia
+                arrowHidden = true;           // ...e segna che è nascosta
+            }, 5000);
+        }
+    }
+
+    // --- 2. GESTIONE NAVIGAZIONE ---
+    function showContent(id) {
+        document.getElementById('main-selector').style.display = 'none';
+        document.getElementById('privacy').style.display = 'none';
+        document.getElementById('cookies').style.display = 'none';
+        
+        document.getElementById(id).style.display = 'block';
+        window.scrollTo(0, 0);
+
+        // Resetta e Ricontrolla (con piccolo ritardo per caricamento)
+        setTimeout(checkScrollNecessity, 50);
+    }
+
+    function goBack() {
+        document.getElementById('privacy').style.display = 'none';
+        document.getElementById('cookies').style.display = 'none';
+        document.getElementById('main-selector').style.display = 'block';
+        
+        window.scrollTo(0,0);
+
+        // Resetta e Ricontrolla
+        setTimeout(checkScrollNecessity, 50);
+    }
+
+    // --- 3. GESTIONE SCROLL UTENTE ---
+    window.onscroll = function() {
+        if (arrowHidden) return;
+
+        // Se l'utente scorre prima dei 5 secondi, nascondila subito
+        if (window.scrollY > 10) { 
+            arrow.style.display = "none";
+            arrowHidden = true;
+            clearTimeout(autoHideTimer); // Ferma il timer, non serve più
+        }
+    };
+    
+    // Funzione click sulla freccia
+    function scrollDown() {
+        window.scrollBy({
+            top: window.innerHeight / 1.5, 
+            behavior: 'smooth'
+        });
+    }
+
+    // --- 4. CONTROLLO INIZIALE ---
+    window.addEventListener('load', checkScrollNecessity);
+    window.addEventListener('resize', checkScrollNecessity);
+
+</script>
+
+</body>
 
 </html>
