@@ -6,66 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Profilo Digitale</title>
     <style>
-    /* --- 1. CONTENITORE ESTERNO --- */
-    #scrollArrow {
-        display: none; /* Gestito dallo script */
-        position: fixed;
-        bottom: 85px; /* Altezza base Mobile */
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 9999;
-        animation: bounce 2s infinite;
-        cursor: pointer;
-    }
-
-    /* --- 2. IL CERCHIO (Piccolo e pulito) --- */
-    .circle-content {
-        width: 56px;
-        height: 56px;
-        background-color: #0073e6;
-        color: white;
-        border-radius: 50%;
-        
-        /* Flexbox per centrare */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        
-        /* Ombra, niente bordo */
-        box-shadow: 0px 4px 12px rgba(0, 115, 230, 0.4);
-        border: none; 
-    }
-
-    /* --- 3. LA FRECCIA --- */
-    .arrow-icon {
-        font-size: 24px; 
-        line-height: 1; /* Rimuove spazi fantasma */
-        font-weight: bold;
-    }
-
-    /* --- 4. LA SCRITTA "Scorri" --- */
-    .arrow-text-inside {
-        font-size: 9px;
-        font-weight: normal; 
-        text-transform: none; 
-        
-        /* >>> QUI C'È IL DISTACCO <<< */
-        margin-top: 3px; /* 3 pixel di spazio tra freccia e testo */
-    }
-
-    /* --- 5. ANIMAZIONE RIMBALZO --- */
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-        40% { transform: translateX(-50%) translateY(-15px); }
-        60% { transform: translateX(-50%) translateY(-7px); }
-    }
-
-    /* --- 6. ALTEZZA SU PC --- */
-    @media (min-width: 601px) {
+        /* --- PAGINA INDEX --- */
+        /* --- 1. CONTENITORE ESTERNO --- */
         #scrollArrow {
-            bottom: 135px; 
+            display: none;
+            /* Gestito dallo script */
+            position: fixed;
+            bottom: 85px;
+            /* Altezza base Mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: bounce 2s infinite;
+            cursor: pointer;
         }
+
+        /* --- 2. IL CERCHIO (Piccolo e pulito) --- */
+        .circle-content {
+            width: 56px;
+            height: 56px;
+            background-color: #0073e6;
+            color: white;
+            border-radius: 50%;
+
+            /* Flexbox per centrare */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /* Ombra, niente bordo */
+            box-shadow: 0px 4px 12px rgba(0, 115, 230, 0.4);
+            border: none;
+        }
+
+        /* --- 3. LA FRECCIA --- */
+        .arrow-icon {
+            font-size: 24px;
+            line-height: 1;
+            /* Rimuove spazi fantasma */
+            font-weight: bold;
+        }
+
+        /* --- 4. LA SCRITTA "Scorri" --- */
+        .arrow-text-inside {
+            font-size: 9px;
+            font-weight: normal;
+            text-transform: none;
+
+            /* >>> QUI C'È IL DISTACCO <<< */
+            margin-top: 3px;
+            /* 3 pixel di spazio tra freccia e testo */
+        }
+
+        /* --- 5. ANIMAZIONE RIMBALZO --- */
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        /* --- 6. ALTEZZA SU PC --- */
+        @media (min-width: 601px) {
+            #scrollArrow {
+                bottom: 135px;
+            }
+        }
+
+        /* --- STILE ANTEPRIMA FOTO --- */
+    .modal {
+        display: none; /* Nascosto di default */
+        position: fixed;
+        z-index: 10000; /* Sopra a tutto */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9); /* Sfondo nero scuro */
+    }
+
+    .modal-content {
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        /* Centratura perfetta */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid white;
+    }
+
+    /* La X per chiudere */
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
     }
 
         body {
@@ -216,6 +269,52 @@
             z-index: 1000;
         }
 
+        /* --- STILE MENU SEGRETO --- */
+    .modal-overlay {
+        display: none; /* Nascosto di default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85); /* Sfondo scuro */
+        z-index: 20000; /* Altissimo livello, sopra a tutto */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-box {
+        background-color: #dfdbdb; /* Stesso grigio dei tuoi box */
+        padding: 30px;
+        border-radius: 15px;
+        border: 2px solid #000;
+        text-align: center;
+        width: 300px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .menu-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #0073e6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .menu-btn:hover {
+        background-color: #005bb5;
+    }
+
+    .close-btn {
+        background-color: #555; /* Grigio scuro per il tasto chiudi */
+        margin-top: 20px;
+    }
+
         @media (max-width: 600px) {
 
             header {
@@ -336,7 +435,7 @@
 </head>
 
 <body>
-    
+
     <div id="scrollArrow" onclick="scrollDown()">
         <div class="circle-content">
             <span class="arrow-icon">&#8595;</span>
@@ -346,9 +445,9 @@
 
     <header>
         <div class="header-content">
-            <img src="Io.JPG" alt="Foto Profilo" class="profile-pic">
+            <img src="Io.JPG" alt="Foto Profilo" class="profile-pic" onclick="openModal(this)">
             <div>
-                <h1>FEDERICO BIANCONI</h1>
+                <h1 onclick="openSecretMenu()" style="cursor: default; color: white;">FEDERICO BIANCONI</h1>
                 <p>Ingegnere Navale</p>
             </div>
         </div>
@@ -390,95 +489,154 @@
         </p>
     </footer>
 
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <div id="secretMenu" class="modal-overlay">
+        <div class="menu-box">
+            <h3>Menu Rapido</h3>
+            <p>Scegli una destinazione:</p>
+            
+            <button class="menu-btn" onclick="window.location.href='https://federico-bianconi.github.io/Profilo-Digitale/index.html'">Profilo Digitale</button>
+            
+            <button class="menu-btn" onclick="window.location.href='https://federico-bianconi.github.io/spazio-personale/'">Spazio Personale</button>
+            
+            <button class="menu-btn close-btn" onclick="closeSecretMenu()">Chiudi</button>
+        </div>
+    </div>
+
     <script>
         // --- VARIABILI GLOBALI ---
         var arrow = document.getElementById("scrollArrow");
-        var arrowHidden = false; 
+        var arrowHidden = false;
         var autoHideTimer;
-    
-        // --- FUNZIONE CERVELLO ---
+
+        // --- 1. FUNZIONE CERVELLO (Gestione Freccia) ---
         function checkScrollNecessity() {
-            if (!arrow) return;
-            
-            // Se l'abbiamo già nascosta (scroll o click), fermati
-            if (arrowHidden) return;
-    
+            if (!arrow) return; // Se non c'è la freccia nella pagina, esci
+            if (arrowHidden) return; // Se l'abbiamo già nascosta manualmente
+
             clearTimeout(autoHideTimer);
-    
+
             // Se la pagina è corta (tutta visibile) -> Nascondi
             if (document.body.scrollHeight <= window.innerHeight) {
                 arrow.style.display = "none";
-                arrowHidden = true; 
+                arrowHidden = true;
             } else {
-                // Se la pagina è lunga -> Mostra per 5 secondi
+                // Se la pagina è lunga -> Mostra
                 arrow.style.display = "block";
-                autoHideTimer = setTimeout(function() {
+                // Nascondi automaticamente dopo 5 secondi se l'utente non fa nulla
+                autoHideTimer = setTimeout(function () {
                     arrow.style.display = "none";
-                    arrowHidden = true; 
+                    arrowHidden = true;
                 }, 5000);
             }
         }
-    
-        // --- NUOVA FUNZIONE SCROLL: VAI A FINE PAGINA ---
+
+        // --- 2. SCROLL VERSO IL BASSO ---
         function scrollDown() {
             window.scrollTo({
-                top: document.body.scrollHeight, // Altezza totale del documento
+                top: document.body.scrollHeight,
                 behavior: 'smooth'
             });
-            
-            // Opzionale: Nascondiamo subito la freccia dato che abbiamo cliccato
-            arrow.style.display = "none";
+            // Nascondiamo subito la freccia dopo il click
+            if(arrow) arrow.style.display = "none";
             arrowHidden = true;
         }
-    
+
         // --- RILEVA SCROLL UTENTE ---
-        window.onscroll = function() {
+        window.onscroll = function () {
             if (!arrow) return;
+            // Se l'utente scorre un po', nascondi la freccia
             if (window.scrollY > 10) {
                 arrow.style.display = "none";
                 arrowHidden = true;
                 clearTimeout(autoHideTimer);
             }
         };
-    
-        // --- FUNZIONI PER LEGACY.HTML (Innocue sulle altre) ---
+
+        // --- 3. FUNZIONI FOTO PROFILO (Lightbox) ---
+        function openModal(element) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            
+            if (modal && modalImg) {
+                modal.style.display = "block"; // Mostra il box nero
+                modalImg.src = element.src;    // Copia la foto cliccata
+                // Nascondiamo la freccia per pulizia
+                if(arrow) arrow.style.display = "none";
+            }
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            if (modal) modal.style.display = "none";
+            
+            // Riattiva il controllo freccia
+            arrowHidden = false; 
+            checkScrollNecessity();
+        }
+
+        // --- 4. FUNZIONI MENU SEGRETO (Nome Cliccabile) ---
+        function openSecretMenu() {
+            var menu = document.getElementById("secretMenu");
+            if (menu) {
+                // Usiamo 'flex' per centrare il box grazie al CSS
+                menu.style.display = "flex"; 
+                // Nasconde la freccia scroll per pulizia
+                if(arrow) arrow.style.display = "none";
+            }
+        }
+
+        function closeSecretMenu() {
+            var menu = document.getElementById("secretMenu");
+            if (menu) menu.style.display = "none";
+            
+            // Riattiva il controllo freccia
+            arrowHidden = false;
+            checkScrollNecessity();
+        }
+
+        // --- 5. FUNZIONI NAVIGAZIONE (Per pagina Legacy/Biscottini) ---
         function showContent(id) {
             var main = document.getElementById('main-selector');
             var priv = document.getElementById('privacy');
             var cook = document.getElementById('cookies');
-    
+
             if (main) main.style.display = 'none';
             if (priv) priv.style.display = 'none';
             if (cook) cook.style.display = 'none';
-            
+
             var target = document.getElementById(id);
             if (target) target.style.display = 'block';
             
             window.scrollTo(0, 0);
             
             // Reset freccia quando cambi scheda
-            arrowHidden = false; 
-            arrow.style.display = "none"; 
+            arrowHidden = false;
+            if(arrow) arrow.style.display = "none";
             setTimeout(checkScrollNecessity, 50);
         }
-    
+
         function goBack() {
             var main = document.getElementById('main-selector');
             var priv = document.getElementById('privacy');
             var cook = document.getElementById('cookies');
-    
+
             if (priv) priv.style.display = 'none';
             if (cook) cook.style.display = 'none';
             if (main) main.style.display = 'block';
             
             window.scrollTo(0, 0);
-    
+            
             // Reset freccia quando torni indietro
             arrowHidden = false;
-            arrow.style.display = "none";
+            if(arrow) arrow.style.display = "none";
             setTimeout(checkScrollNecessity, 50);
         }
-    
+
         // --- AVVIO ---
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
