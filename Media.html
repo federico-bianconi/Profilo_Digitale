@@ -6,63 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Federico Bianconi | Profilo Digitale</title>
     <style>
-
-        /* --- INDICATORE DI SCROLL (FRECCIA) --- */
-        .scroll-indicator {
-            display: none;
-            position: fixed;
-            bottom: 85px;
-            /* Leggermente aggiustato */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-
-            /* --- NUOVO STILE CIRCOLARE --- */
-            width: 50px;
-            height: 50px;
-            background-color: #0073e6;
-            /* Sfondo blu semi-trasparente */
-            color: white;
-            /* Freccia bianca */
-            font-size: 28px;
-            border-radius: 50%;
-            /* Rende il box un cerchio perfetto */
-            text-align: center;
-            line-height: 50px;
-            /* Centra verticalmente la freccia nel cerchio */
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            /* Ombra sotto il cerchio */
-            text-shadow: none;
-            /* Rimuove l'alone precedente */
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             overflow-y: auto;
+        }
+
+        /* --- 1. STILE FRECCIA (BASE) --- */
+        .scroll-indicator {
+            display: none; /* Nascosto di default */
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+
+            /* Grafica */
+            width: 50px;
+            height: 50px;
+            background-color: #0073e6;
+            color: white;
+            font-size: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-15px); }
+            60% { transform: translateX(-50%) translateY(-7px); }
+        }
+
+        /* --- 2. REGOLA NUCLEARE PER PC --- */
+        /* Se lo schermo è più largo di 601px, la freccia DEVE sparire */
+        @media screen and (min-width: 601px) {
+            .scroll-indicator {
+                display: none !important;
+            }
         }
 
         header {
@@ -90,6 +77,7 @@
             margin: 0 auto;
         }
 
+        /* --- BOX ARTICOLI --- */
         .box-articolo {
             box-sizing: border-box;
             border: 2px solid #000000;
@@ -182,12 +170,10 @@
             z-index: 1000;
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 601px) {
-            .scroll-indicator {
-                display: block;
-                /* Visibile su smartphone */
-            }
+        /* --- 3. MOBILE (Sotto 601px) --- */
+        @media (max-width: 600px) {
+            
+            /* RIMOSSO IL BLOCCO CHE NASCONDEVA LA FRECCIA */
 
             header {
                 flex-direction: column;
@@ -395,85 +381,56 @@
     </footer>
 
     <script>
-        // Variabili Globali
         var arrow = document.getElementById("scrollArrow");
         var arrowHidden = false;
-        var autoHideTimer; // Variabile per gestire il conto alla rovescia
+        var autoHideTimer;
     
-        // --- 1. FUNZIONE CERVELLO: Decide se mostrare la freccia ---
         function checkScrollNecessity() {
-            // Se siamo su PC, esci
-            if (window.innerWidth > 601) return;
+            if (!arrow) return;
     
-            // Pulisci eventuali timer precedenti (resetta il conteggio)
+            // 1. SICUREZZA PC: Se lo schermo è > 600px, forza nascondi e esci.
+            if (window.innerWidth > 600) {
+                arrow.style.display = "none";
+                return;
+            }
+    
             clearTimeout(autoHideTimer);
     
-            // Se la pagina è corta e non serve scorrere...
+            // 2. Controllo Altezza per Mobile
             if (document.body.scrollHeight <= window.innerHeight) {
                 arrow.style.display = "none";
                 arrowHidden = true;
             } else {
-                // Se la pagina è lunga:
-                arrow.style.display = "block"; // Mostra la freccia
-                arrowHidden = false;           // Riattiva il controllo scroll
+                // Pagina lunga: mostra freccia
+                arrow.style.display = "block";
+                arrowHidden = false;
     
-                // *** LA CHICCA DEI 5 SECONDI ***
-                // Imposta un timer: fra 5000 millisecondi (5 secondi)...
+                // Timer 5 secondi
                 autoHideTimer = setTimeout(function() {
-                    arrow.style.display = "none"; // ...nascondi la freccia
-                    arrowHidden = true;           // ...e segna che è nascosta
+                    arrow.style.display = "none";
+                    arrowHidden = true;
                 }, 5000);
             }
         }
     
-        // --- 2. GESTIONE NAVIGAZIONE ---
-        function showContent(id) {
-            document.getElementById('main-selector').style.display = 'none';
-            document.getElementById('privacy').style.display = 'none';
-            document.getElementById('cookies').style.display = 'none';
-            
-            document.getElementById(id).style.display = 'block';
-            window.scrollTo(0, 0);
+        function showContent(id) {} // Vuota
+        function goBack() {}        // Vuota
     
-            // Resetta e Ricontrolla (con piccolo ritardo per caricamento)
-            setTimeout(checkScrollNecessity, 50);
+        function scrollDown() {
+            window.scrollBy({ top: window.innerHeight / 1.5, behavior: 'smooth' });
         }
     
-        function goBack() {
-            document.getElementById('privacy').style.display = 'none';
-            document.getElementById('cookies').style.display = 'none';
-            document.getElementById('main-selector').style.display = 'block';
-            
-            window.scrollTo(0,0);
-    
-            // Resetta e Ricontrolla
-            setTimeout(checkScrollNecessity, 50);
-        }
-    
-        // --- 3. GESTIONE SCROLL UTENTE ---
         window.onscroll = function() {
-            if (arrowHidden) return;
-    
-            // Se l'utente scorre prima dei 5 secondi, nascondila subito
-            if (window.scrollY > 10) { 
+            if (!arrow || arrowHidden) return;
+            if (window.scrollY > 10) {
                 arrow.style.display = "none";
                 arrowHidden = true;
-                clearTimeout(autoHideTimer); // Ferma il timer, non serve più
+                clearTimeout(autoHideTimer);
             }
         };
-        
-        // Funzione click sulla freccia
-        function scrollDown() {
-            window.scrollBy({
-                top: window.innerHeight / 1.5, 
-                behavior: 'smooth'
-            });
-        }
     
-        // --- 4. CONTROLLO INIZIALE ---
         window.addEventListener('load', checkScrollNecessity);
         window.addEventListener('resize', checkScrollNecessity);
-    
     </script>
 
 </body>
